@@ -1,0 +1,166 @@
+:root{
+    --black: #000;
+    --gray: #8c9099;
+    --darkgray: #2b3554;
+    --white: #eeeeee;
+    --blue: #011d4a;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: linear-gradient(90deg, var(--darkgray) 0%, var(--blue) 100%);
+}
+
+.board-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 85vh;
+}
+
+/* Title area */
+.title-wrapper{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    height: 15vh;
+    color: var(--white);
+}
+
+.page-title{
+    font-size: 2.5rem;
+}
+
+.side-text{
+    color: var(--white);
+    text-align: center;
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+/* Images */
+.image-wrapper{
+    display: flex;
+    justify-content: center;
+    column-gap: 100px;
+}
+
+.image{
+    filter: opacity(0.3);
+    transition: 0.5s ease;
+    width: 10%;
+    min-width: 90px;
+    height: auto;
+}
+
+/* Player's Side */
+.player-image:hover{
+    filter: opacity(1);
+    transform: translateY(-50px);
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+.player-image-move{
+    filter: opacity(1);
+    transform: translateY(-50px);
+    transition: 0.5s ease;
+}
+
+/* Computer's Side */
+.comp-image-move{
+    filter: opacity(1);
+    transform: translateY(50px);
+    transition: 0.5s ease;
+}
+
+
+/* Popup screen */
+.overlay {
+    position: fixed;
+    inset: 0;
+    transition: opacity 0.7s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.overlay-show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup-wrapper {
+    position: relative;
+    min-width: 200px;
+    width: 20%;
+    margin: 50vh auto;
+    padding: 20px;
+    color: var(--white);
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    transition: all 2s ease;
+    text-align: center;
+}
+
+.popup-title {
+    font-size: 32px;
+}
+
+#result-text {
+    font-size: 22px;
+}
+
+/* Game over screen */
+
+.go-overlay {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 0.7s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.go-overlay-show{
+    visibility: visible;
+    opacity: 1;
+}
+
+.go-wrapper {
+    position: relative;
+    min-width: 200px;
+    transition: all 2s ease;
+    text-align: center;
+}
+
+#go-title {
+    color: var(--white);
+    font-size: 5rem;
+    margin-bottom: 10px;
+}
+
+#go-restart-button{
+    width: 150px;
+    color: var(--white);
+    padding: 20px;
+    font-size: 2rem;
+    border: none;
+    background: none;
+    transition: all 0.8s ease;
+}
+
+#go-restart-button:hover{
+    border-radius: 30px;
+    width: 300px;
+    transition: all 0.8s ease;
+    background: linear-gradient(90deg, rgb(0, 0, 0, 0.1) 5%, rgba(9,9,121,1) 40%, rgba(9,9,121,1) 60%, rgb(0, 0, 0, 0.1) 95%);
+}

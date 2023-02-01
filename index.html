@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissor!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Title -->
+        <div class="title-wrapper">
+            <h1 class="page-title">Welcome to Rock Paper Scissor!</h1>
+        </div>
+        <!-- Game Board -->
+        <div class="board-wrapper">
+            <!-- Computer's Side-->
+            <div class="comp-wrapper">
+                <p class="side-text">Computer - <span id="comp-score">0</span></p>
+                <div class="image-wrapper comp-side">
+                    <img src="./images/rock.png" class="comp-image image" id="comp-rock">
+                    <img src="./images/paper.png" class="comp-image image" id="comp-paper">
+                    <img src="./images/scissor.png" class="comp-image image" id="comp-scissor">
+                </div>
+            </div>
+            <!-- Player's Side-->
+            <div class="player-wrapper">
+                <div class="image-wrapper player-side">
+                    <img src="./images/rock.png" class="player-image image" id="player-rock">
+                    <img src="./images/paper.png" class="player-image image" id="player-paper">
+                    <img src="./images/scissor.png" class="player-image image" id="player-scissor">
+                </div>
+                <p class="side-text">Player - <span id="player-score">0</span></p>
+            </div>
+        </div>
+        <!-- Popup Screen -->
+        <div id="popup" class="overlay">
+            <div class="popup-wrapper">
+                <h2 class="popup-title"> Round <span id="round-number">0</span></h2>
+                <p id="result-text"> Placeholder text </p>
+            </div>
+        </div>
+        <!-- Game Over Screen -->
+        <div id="game-over" class="go-overlay">
+            <div class="go-wrapper">
+                <h2 id="go-title"> Victory! or Death! </h2>
+                <button id="go-restart-button"> Restart </button>
+            </div>
+        </div>
+    </div>
+    <script src="rockPaperScissor.js"></script>
+</body>
+</html>
