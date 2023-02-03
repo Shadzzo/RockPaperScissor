@@ -1,7 +1,7 @@
 //Score Overlay
 async function overlayScore(result){
-    var overlay = document.getElementById("popup");
     overlay.classList.add("overlay-show");
+    //Delay function
     const delay = ms => new Promise(res => setTimeout(res, ms));
     await delay(3000);
     overlay.classList.remove("overlay-show");
@@ -11,8 +11,6 @@ async function overlayScore(result){
 
 //Restart the game
 function restart(gameOver){
-    var playerScore = document.getElementById("player-score");
-    var compScore = document.getElementById("comp-score");
     playerScore.innerText = "0";
     compScore.innerText = "0";
     gameOver.classList.remove("go-overlay-show");
@@ -21,9 +19,6 @@ function restart(gameOver){
 
 //Move the corresponding image to the computer's choice
 function compMovementAdd(computerSelection){
-    var compRock = document.getElementById("comp-rock");
-    var compPaper = document.getElementById("comp-paper");
-    var compScissor = document.getElementById("comp-scissor");
     if(computerSelection == 0){
         compRock.classList.add("comp-image-move");
     } else if(computerSelection == 1){
@@ -35,9 +30,6 @@ function compMovementAdd(computerSelection){
 
 //Remove computer image's movement
 function compMovementRemove(){
-    var compRock = document.getElementById("comp-rock");
-    var compPaper = document.getElementById("comp-paper");
-    var compScissor = document.getElementById("comp-scissor");
     compRock.classList.remove("comp-image-move");
     compPaper.classList.remove("comp-image-move");
     compScissor.classList.remove("comp-image-move");    
@@ -45,9 +37,6 @@ function compMovementRemove(){
 
 //Remove player image's movement
 function playerMovementRemove(){
-    var playerRock = document.getElementById("player-rock");
-    var playerPaper = document.getElementById("player-paper");
-    var playerScissor = document.getElementById("player-scissor");
     playerRock.classList.remove("player-image-move");
     playerPaper.classList.remove("player-image-move");
     playerScissor.classList.remove("player-image-move");
@@ -64,7 +53,6 @@ function computerPlay(){
 //Player's decision
 async function playerPlay(){
     var playerSelection;
-    const playerImages = document.querySelectorAll(".player-image");
     await (new Promise(resolve => {
         playerImages.forEach(function(playerImage){
             playerImage.addEventListener("click", function(event){
@@ -82,17 +70,13 @@ async function playerPlay(){
                     resolve();
                 }
             })
-        })
+        });
     }));
     return playerSelection;
 }
 
 // Round Calculations
 function playRound(computerSelection, playerSelection){
-    //Score Spans
-    var playerScore = document.getElementById("player-score");
-    var compScore = document.getElementById("comp-score");
-    var resultText = document.getElementById("result-text");
     //Tie condition
     if(computerSelection == playerSelection){
         resultText.innerText = "You tied!"
@@ -134,10 +118,7 @@ function playRound(computerSelection, playerSelection){
 }
 
 // Winner selection and Final screen
-async function winCondition(result){
-    var gameOver = document.getElementById("game-over");
-    var goTitle = document.getElementById("go-title");
-    var restartButton = document.getElementById("go-restart-button");
+function winCondition(result){
     var comp = 0;
     var player = 0;
     for (let i = 0; i < result.length; i++) {
@@ -155,16 +136,10 @@ async function winCondition(result){
     } else if(comp == player){
         goTitle.innerText = "Tie!";
     }
-    await (new Promise(resolve => {
-        restartButton.addEventListener("click", function(event){
-            restart(gameOver);
-        });
-    }));
 }
 
 //Main function
 async function game(){
-    var roundSpan = document.getElementById("round-number");
     var roundCount = 0;
     var result = [];
     while(roundCount < 5){
@@ -179,9 +154,38 @@ async function game(){
         await overlayScore(result[roundCount]);
         roundCount++;
     };
-    await winCondition(result);
+    winCondition(result);
 }
 
-// Start the game
 const options = ["ROCK", "PAPER", "SCISSOR"];
+
+//Score Spans
+var playerScore = document.getElementById("player-score");
+var compScore = document.getElementById("comp-score");
+var resultText = document.getElementById("result-text");
+var roundSpan = document.getElementById("round-number");
+
+//Computer Images
+var compRock = document.getElementById("comp-rock");
+var compPaper = document.getElementById("comp-paper");
+var compScissor = document.getElementById("comp-scissor");
+
+//Player Images
+const playerImages = document.querySelectorAll(".player-image");
+var playerRock = document.getElementById("player-rock");
+var playerPaper = document.getElementById("player-paper");
+var playerScissor = document.getElementById("player-scissor");
+
+//Round Overlay
+var overlay = document.getElementById("popup");
+
+//Game Over Screen
+var gameOver = document.getElementById("game-over");
+var goTitle = document.getElementById("go-title");
+var restartButton = document.getElementById("go-restart-button");
+restartButton.addEventListener("click", function(event){
+    restart(gameOver);
+});
+
+// Start the game
 game();
