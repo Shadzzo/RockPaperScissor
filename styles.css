@@ -4,6 +4,7 @@
     --darkgray: #2b3554;
     --white: #eeeeee;
     --blue: #011d4a;
+    --backgroundGray: rgb(43, 42, 51);
 }
 
 * {
@@ -13,7 +14,7 @@
 }
 
 body{
-    background: linear-gradient(90deg, var(--darkgray) 0%, var(--blue) 100%);
+    background: var(--backgroundGray);
 }
 
 .board-wrapper{

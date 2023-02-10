@@ -1,3 +1,33 @@
+//Score Spans
+var playerScore = document.getElementById("player-score");
+var compScore = document.getElementById("comp-score");
+var resultText = document.getElementById("result-text");
+var roundSpan = document.getElementById("round-number");
+
+//Computer Images
+var compRock = document.getElementById("comp-rock");
+var compPaper = document.getElementById("comp-paper");
+var compScissor = document.getElementById("comp-scissor");
+
+//Player Images
+const playerImages = document.querySelectorAll(".player-image");
+var playerRock = document.getElementById("player-rock");
+var playerPaper = document.getElementById("player-paper");
+var playerScissor = document.getElementById("player-scissor");
+
+//Round Overlay
+var overlay = document.getElementById("popup");
+
+//Game Over Screen
+var gameOver = document.getElementById("game-over");
+var goTitle = document.getElementById("go-title");
+var restartButton = document.getElementById("go-restart-button");
+
+// Game Over Event
+restartButton.addEventListener("click", function(event){
+    restart(gameOver);
+});
+
 //Score Overlay
 async function overlayScore(result){
     overlay.classList.add("overlay-show");
@@ -47,7 +77,7 @@ function computerPlay(){
     //Get a random number between 0 - 2 
     var computerSelection = Math.floor(Math.random() * 3);
     compMovementAdd(computerSelection);
-    return options[computerSelection];    
+    return computerSelection;    
 }
 
 //Player's decision
@@ -58,15 +88,15 @@ async function playerPlay(){
             playerImage.addEventListener("click", function(event){
                 if(event.target.id == "player-rock"){
                     playerImage.classList.add("player-image-move");
-                    playerSelection = "ROCK";
+                    playerSelection = 0;
                     resolve();
                 } else if(event.target.id == "player-paper"){
                     playerImage.classList.add("player-image-move");
-                    playerSelection = "PAPER";
+                    playerSelection = 1;
                     resolve();
                 } else if(event.target.id == "player-scissor"){
                     playerImage.classList.add("player-image-move");
-                    playerSelection = "SCISSOR";
+                    playerSelection = 2;
                     resolve();
                 }
             })
@@ -75,59 +105,27 @@ async function playerPlay(){
     return playerSelection;
 }
 
-// Round Calculations
+// Round Calculations [Hard codded values ROCK = 0, Paper = 1, Scissor = 2]
 function playRound(computerSelection, playerSelection){
-    //Tie condition
-    if(computerSelection == playerSelection){
+    if (computerSelection == (playerSelection + 1) % 3){
+        // Lose condition
+        compScore.innerText = parseInt(compScore.innerText) + 1;
+        resultText.innerText = "You lost this round!"
+        return 2;
+    } else if (computerSelection == (playerSelection + 2) % 3){
+        // Win condition
+        playerScore.innerText = parseInt(playerScore.innerText) + 1;
+        resultText.innerText = "You won this round!"
+        return 1;
+    } else {
+        // Tie condition
         resultText.innerText = "You tied!"
         return 0;
-    }
-    //Win conditions
-    if(computerSelection == "ROCK"){
-        if(playerSelection == "PAPER"){
-            //Score update
-            playerScore.innerText = parseInt(playerScore.innerText) + 1;
-            resultText.innerText = "You won this round!"
-            return 1;            
-        } else if(playerSelection == "SCISSOR"){
-            compScore.innerText = parseInt(compScore.innerText) + 1;
-            resultText.innerText = "You lost this round!"
-            return 2;
-        }
-    } else if(computerSelection == "PAPER"){
-        if(playerSelection == "ROCK"){
-            compScore.innerText = parseInt(compScore.innerText) + 1;
-            resultText.innerText = "You lost this round!"
-            return 2;            
-        } else if(playerSelection == "SCISSOR"){
-            playerScore.innerText = parseInt(playerScore.innerText) + 1;
-            resultText.innerText = "You won this round!"
-            return 1;
-        }
-    } else if(computerSelection == "SCISSOR"){
-        if(playerSelection == "ROCK"){
-            playerScore.innerText = parseInt(playerScore.innerText) + 1;
-            resultText.innerText = "You won this round!"
-            return 1;            
-        } else if(playerSelection == "PAPER"){
-            compScore.innerText = parseInt(compScore.innerText) + 1;
-            resultText.innerText = "You lost this round!"
-            return 2;
-        }
     }
 }
 
 // Winner selection and Final screen
-function winCondition(result){
-    var comp = 0;
-    var player = 0;
-    for (let i = 0; i < result.length; i++) {
-        if(result[i] == 1){
-            player++;
-        } else if(result[i] == 2){
-            comp++;
-        }       
-    }
+function winCondition(result, player, comp){
     gameOver.classList.add("go-overlay-show");
     if(comp > player){
         goTitle.innerText = "Failure!";
@@ -141,8 +139,10 @@ function winCondition(result){
 //Main function
 async function game(){
     var roundCount = 0;
+    var comp = 0;
+    var player = 0;
     var result = [];
-    while(roundCount < 5){
+    while(player < 5 && comp < 5){
         //Get player choice
         var playerSelection =  await playerPlay();
         //Get computer choice
@@ -152,40 +152,16 @@ async function game(){
         result[roundCount] = playRound(computerSelection, playerSelection);
         //Send the result to overlay
         await overlayScore(result[roundCount]);
+        //Win counter
+        if(result[roundCount] == 1){
+            player++;
+        } else if(result[roundCount] == 2){
+            comp++;
+        }
         roundCount++;
     };
-    winCondition(result);
+    winCondition(result, player, comp);
 }
-
-const options = ["ROCK", "PAPER", "SCISSOR"];
-
-//Score Spans
-var playerScore = document.getElementById("player-score");
-var compScore = document.getElementById("comp-score");
-var resultText = document.getElementById("result-text");
-var roundSpan = document.getElementById("round-number");
-
-//Computer Images
-var compRock = document.getElementById("comp-rock");
-var compPaper = document.getElementById("comp-paper");
-var compScissor = document.getElementById("comp-scissor");
-
-//Player Images
-const playerImages = document.querySelectorAll(".player-image");
-var playerRock = document.getElementById("player-rock");
-var playerPaper = document.getElementById("player-paper");
-var playerScissor = document.getElementById("player-scissor");
-
-//Round Overlay
-var overlay = document.getElementById("popup");
-
-//Game Over Screen
-var gameOver = document.getElementById("game-over");
-var goTitle = document.getElementById("go-title");
-var restartButton = document.getElementById("go-restart-button");
-restartButton.addEventListener("click", function(event){
-    restart(gameOver);
-});
 
 // Start the game
 game();
